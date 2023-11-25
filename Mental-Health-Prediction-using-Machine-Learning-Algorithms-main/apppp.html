@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digit Recognition</title>
+</head>
+<body>
+    <h1>Digit Recognition</h1>
+    <form action="/predict" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*">
+        <input type="submit" value="Predict">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        // JavaScript code to display the prediction result
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 'Predicted Digit: ' + data.predicted_digit;
+            });
+        });
+    </script>
+</body>
+</html>
